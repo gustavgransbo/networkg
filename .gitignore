@@ -1,0 +1,5 @@
+/target
+.venv
+*.pyd
+__pycache__
+.vscode
