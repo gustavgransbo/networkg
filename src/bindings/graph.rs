@@ -31,6 +31,7 @@ impl PyGraph {
     }
 
     #[classmethod]
+    #[text_signature = "(size)"]
     fn fully_connected(_cls: &PyType, size: usize) -> PyResult<Self> {
         Ok(PyGraph {
             graph: Graph::fully_connected(size),
@@ -62,6 +63,7 @@ impl PyGraph {
         Ok(self.graph.nodes.clone())
     }
 
+    #[text_signature = "(n1, n2)"]
     fn add_edge(&mut self, n1: usize, n2: usize) -> PyResult<()> {
         match self.graph.add_edge(n1, n2) {
             Ok(()) => Ok(()),
@@ -69,6 +71,7 @@ impl PyGraph {
         }
     }
 
+    #[text_signature = "(edges)"]
     fn add_edges<'p>(&mut self, py: Python<'p>, edges: &PyAny) -> PyResult<()> {
         let edges_py_iterator = PyIterator::from_object(py, edges)?;
         let edges_iter = edges_py_iterator.map(|x| x.and_then(PyAny::extract::<(usize, usize)>));
