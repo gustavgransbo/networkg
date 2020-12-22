@@ -1,3 +1,4 @@
+/// Python bindings for the graph module
 use crate::core::graph::{Graph, Node};
 
 use std::convert::TryFrom;
@@ -6,8 +7,16 @@ use pyo3::exceptions::{PyAttributeError, PyValueError};
 use pyo3::prelude::*;
 use pyo3::types::{PyIterator, PyType};
 
+/// Submodule containing Python bindings for the Graph datastructure
+pub fn module(py: Python) -> PyResult<&PyModule> {
+    let module = PyModule::new(py, "_graph")?;
+    module.add_class::<PyGraph>()?;
+    Ok(module)
+}
+
+/// Python bindings for the networkg Graph
 #[pyclass(name=Graph)]
-pub struct PyGraph {
+struct PyGraph {
     graph: Graph,
 }
 
@@ -22,6 +31,7 @@ impl PyGraph {
     }
 
     #[classmethod]
+    #[text_signature = "(size)"]
     fn fully_connected(_cls: &PyType, size: usize) -> PyResult<Self> {
         Ok(PyGraph {
             graph: Graph::fully_connected(size),
@@ -29,9 +39,10 @@ impl PyGraph {
     }
 
     #[classmethod]
-    fn from_csv(_cls: &PyType, file_name: &str, size: usize, delimiter: &str) -> PyResult<Self> {
+    #[text_signature = "(path, delimiter)"]
+    fn from_csv(_cls: &PyType, path: &str, size: usize, delimiter: &str) -> PyResult<Self> {
         match str_as_char_u8(delimiter) {
-            Ok(delimiter) => match Graph::from_csv(file_name, size, delimiter) {
+            Ok(delimiter) => match Graph::from_csv(path, size, delimiter) {
                 Ok(graph) => Ok(PyGraph { graph }),
                 Err(error) => Err(PyValueError::new_err(error)),
             },
@@ -52,6 +63,7 @@ impl PyGraph {
         Ok(self.graph.nodes.clone())
     }
 
+    #[text_signature = "(n1, n2)"]
     fn add_edge(&mut self, n1: usize, n2: usize) -> PyResult<()> {
         match self.graph.add_edge(n1, n2) {
             Ok(()) => Ok(()),
@@ -59,6 +71,7 @@ impl PyGraph {
         }
     }
 
+    #[text_signature = "(edges)"]
     fn add_edges<'p>(&mut self, py: Python<'p>, edges: &PyAny) -> PyResult<()> {
         let edges_py_iterator = PyIterator::from_object(py, edges)?;
         let edges_iter = edges_py_iterator.map(|x| x.and_then(PyAny::extract::<(usize, usize)>));

@@ -2,10 +2,10 @@ use csv;
 use std::fs::File;
 
 pub fn read_edge_list_csv(
-    file_name: &str,
+    path: &str,
     delimiter: u8,
 ) -> Result<csv::DeserializeRecordsIntoIter<File, (usize, usize)>, String> {
-    let file = match File::open(file_name) {
+    let file = match File::open(path) {
         Err(error) => return Err(error.to_string()),
         Ok(f) => f,
     };

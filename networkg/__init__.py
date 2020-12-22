@@ -1,3 +1,5 @@
-from .networkg import Graph
+"""A graph processing library built in Rust."""
 
-__all__ = ["Graph"]
+from . import graph
+
+__all__ = ["graph"]

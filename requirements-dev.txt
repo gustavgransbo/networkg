@@ -7,3 +7,8 @@ pytest==6.1.2
 nox==2020.8.22
 flake8-isort==4.0.0
 flake8-black==0.2.1
+flake8-docstrings==1.5.0
+darglint==1.5.8
+xdoctest==0.15.0
+sphinx==3.4.0
+sphinx-autodoc-typehints==1.11.1
