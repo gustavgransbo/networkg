@@ -18,7 +18,10 @@ pyo3 = {version = "0.12.4", features = ["extension-module"]}
 
 [package.metadata.maturin]
 requires-python = ">=3.7"
-project-url = ["Repository, https://github.com/gustavgransbo/networkg/"]
+project-url = [
+    "Repository, https://github.com/gustavgransbo/networkg/",
+    "Documentation: https://networkg.readthedocs.io/"
+]
 classifier = [
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Rust",
