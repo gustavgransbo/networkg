@@ -1,3 +1,4 @@
+/// Python bindings for the graph module
 use crate::core::graph::{Graph, Node};
 
 use std::convert::TryFrom;
@@ -29,9 +30,10 @@ impl PyGraph {
     }
 
     #[classmethod]
-    fn from_csv(_cls: &PyType, file_name: &str, size: usize, delimiter: &str) -> PyResult<Self> {
+    #[text_signature = "(path, delimiter)"]
+    fn from_csv(_cls: &PyType, path: &str, size: usize, delimiter: &str) -> PyResult<Self> {
         match str_as_char_u8(delimiter) {
-            Ok(delimiter) => match Graph::from_csv(file_name, size, delimiter) {
+            Ok(delimiter) => match Graph::from_csv(path, size, delimiter) {
                 Ok(graph) => Ok(PyGraph { graph }),
                 Err(error) => Err(PyValueError::new_err(error)),
             },

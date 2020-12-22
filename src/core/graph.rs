@@ -21,9 +21,9 @@ impl Graph {
         }
     }
 
-    pub fn from_csv(file_name: &str, size: usize, delimiter: u8) -> Result<Self, String> {
+    pub fn from_csv(path: &str, size: usize, delimiter: u8) -> Result<Self, String> {
         let mut graph = Graph::new(size);
-        graph.add_falliable_edges(read_edge_list_csv(file_name, delimiter)?)?;
+        graph.add_falliable_edges(read_edge_list_csv(path, delimiter)?)?;
         Ok(graph)
     }
 
