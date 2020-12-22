@@ -21,3 +21,13 @@ def lint(session: Session):
         "dev-requirements.txt",
     )
     session.run("flake8", *args)
+
+
+@nox.session(python=["3.7", "3.8"])
+def xdoctest(session: Session) -> None:
+    """Run Python examples with xdoctest."""
+    args = session.posargs or ["all"]
+    session.install("xdoctest", "maturin", "-c", "dev-requirements.txt")
+    session.run("maturin", "develop")
+    session.run("xdoctest", "networkg", *args)
+
