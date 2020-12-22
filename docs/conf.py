@@ -12,3 +12,4 @@ project = "networkg"
 author = "Gustav Gränsbo"
 copyright = f"2020, {author}"
 extensions = ["sphinx.ext.autodoc", "sphinx.ext.napoleon", "sphinx_autodoc_typehints"]
+autodoc_mock_imports = ["networkg.networkg"]
