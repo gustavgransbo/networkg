@@ -7,8 +7,16 @@ use pyo3::exceptions::{PyAttributeError, PyValueError};
 use pyo3::prelude::*;
 use pyo3::types::{PyIterator, PyType};
 
+/// Submodule containing Python bindings for the Graph datastructure
+pub fn module(py: Python) -> PyResult<&PyModule> {
+    let module = PyModule::new(py, "_graph")?;
+    module.add_class::<PyGraph>()?;
+    Ok(module)
+}
+
+/// Python bindings for the networkg Graph
 #[pyclass(name=Graph)]
-pub struct PyGraph {
+struct PyGraph {
     graph: Graph,
 }
 
