@@ -18,7 +18,7 @@ def lint(session: Session):
         "flake8-docstrings",
         "darglint",
         "-c",
-        "dev-requirements.txt",
+        "requirements-dev.txt",
     )
     session.run("flake8", *args)
 
@@ -27,7 +27,7 @@ def lint(session: Session):
 def xdoctest(session: Session) -> None:
     """Run Python examples with xdoctest."""
     args = session.posargs or ["all"]
-    session.install("xdoctest", "maturin", "-c", "dev-requirements.txt")
+    session.install("xdoctest", "maturin", "-c", "requirements-dev.txt")
     session.run("maturin", "develop")
     session.run("xdoctest", "networkg", *args)
 
@@ -35,5 +35,5 @@ def xdoctest(session: Session) -> None:
 @nox.session(python="3.8")
 def docs(session: Session) -> None:
     """Build documentation with Sphinx."""
-    session.install("sphinx", "sphinx-autodoc-typehints", "-c", "dev-requirements.txt")
+    session.install("sphinx", "sphinx-autodoc-typehints", "-c", "requirements-dev.txt")
     session.run("sphinx-build", "docs", "docs/_build")

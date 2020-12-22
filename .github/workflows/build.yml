@@ -43,7 +43,7 @@ jobs:
     
     - name: Install maturin
       run: |
-        pip install maturin -c dev-requirements.txt
+        pip install maturin -c requirements-dev.txt
 
     - name: Build wheel
       run: |
