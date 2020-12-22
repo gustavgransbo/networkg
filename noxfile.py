@@ -3,6 +3,7 @@ import nox
 from nox.sessions import Session
 
 nox.options.reuse_existing_virtualenvs = True
+nox.options.sessions = ["mypy", "lint", "xdoctest"]
 
 
 @nox.session(python="3.8")
