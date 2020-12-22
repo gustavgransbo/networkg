@@ -3,3 +3,4 @@
 *.pyd
 __pycache__
 .vscode
+/docs/_build/

@@ -31,3 +31,9 @@ def xdoctest(session: Session) -> None:
     session.run("maturin", "develop")
     session.run("xdoctest", "networkg", *args)
 
+
+@nox.session(python="3.8")
+def docs(session: Session) -> None:
+    """Build documentation with Sphinx."""
+    session.install("sphinx", "sphinx-autodoc-typehints", "-c", "dev-requirements.txt")
+    session.run("sphinx-build", "docs", "docs/_build")
