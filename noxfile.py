@@ -23,7 +23,7 @@ def lint(session: Session):
     session.run("flake8", *args)
 
 
-@nox.session(python=["3.7", "3.8"])
+@nox.session(python=["3.7", "3.8", "3.9"])
 def xdoctest(session: Session) -> None:
     """Run Python examples with xdoctest."""
     args = session.posargs or ["all"]
