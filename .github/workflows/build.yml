@@ -48,3 +48,8 @@ jobs:
     - name: Build wheel
       run: |
         maturin build -i python --release
+            
+    - name: Check build with Twine
+      run: |
+        pip install twine
+        twine check target/wheels/*
