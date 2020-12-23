@@ -3,7 +3,7 @@ import nox
 from nox.sessions import Session
 
 nox.options.reuse_existing_virtualenvs = True
-nox.options.sessions = ["mypy", "lint", "xdoctest"]
+nox.options.sessions = ["mypy", "lint", "xdoctest-3.8"]
 
 
 @nox.session(python="3.8")
@@ -29,7 +29,7 @@ def mypy(session: Session) -> None:
     """Type-check using mypy."""
     args = session.posargs or ["networkg"]
     session.install("mypy", "maturin", "-c", "requirements-dev.txt")
-    session.run("maturin", "develop")
+    session.install(".")
     session.run("mypy", *args)
 
 
@@ -38,7 +38,7 @@ def xdoctest(session: Session) -> None:
     """Run Python examples with xdoctest."""
     args = session.posargs or ["all"]
     session.install("xdoctest", "maturin", "-c", "requirements-dev.txt")
-    session.run("maturin", "develop")
+    session.install(".")
     session.run("xdoctest", "networkg", *args)
 
 
