@@ -1,8 +1,6 @@
 networkg
 ========
 
-.. badges-begin
-
 |PyPI| |Python Version| |License|
 |Build| |Read the Docs| |Black|
 
