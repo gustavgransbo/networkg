@@ -29,8 +29,7 @@ def mypy(session: Session) -> None:
     """Type-check using mypy."""
     args = session.posargs or ["networkg"]
     session.install("mypy", "maturin", "-c", "requirements-dev.txt")
-    session.install("-r", "requirements.txt")
-    session.run("maturin", "develop")
+    session.install(".")
     session.run("mypy", *args)
 
 
@@ -39,8 +38,7 @@ def xdoctest(session: Session) -> None:
     """Run Python examples with xdoctest."""
     args = session.posargs or ["all"]
     session.install("xdoctest", "maturin", "-c", "requirements-dev.txt")
-    session.install("-r", "requirements.txt")
-    session.run("maturin", "develop")
+    session.install(".")
     session.run("xdoctest", "networkg", *args)
 
 
