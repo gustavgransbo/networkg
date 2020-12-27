@@ -32,7 +32,7 @@ def install_networkg(session: Session) -> None:
             silent=True,  # Command output is only returned when silenced=True
         )
     )
-    session.install(wheel_path)
+    session.install(wheel_path, "--force-reinstall")
 
 
 @nox.session(python=["3.7", "3.8", "3.9"])
