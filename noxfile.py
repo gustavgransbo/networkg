@@ -6,6 +6,35 @@ nox.options.reuse_existing_virtualenvs = True
 nox.options.sessions = ["mypy", "lint", "xdoctest-3.8"]
 
 
+def _get_path_to_built_wheel(build_output: str) -> str:
+    """Get the path to the wheel built by `maturin build`."""
+    # The wheel is the last entry on the last line of the command output.
+    return build_output.strip().splitlines()[-1].split(" ")[-1]
+
+
+def install_networkg(session: Session) -> None:
+    """Build and install networkg using maturin."""
+    session.install("maturin", "-c", "requirements-dev.txt")
+    # A custom target directory is created for each python version to circumvent
+    # maturin problems related to sharing the same build area among interpreters.
+    target_directory = f"target/{session.python}".replace(".", "-")
+    wheel_directory = f"{target_directory}/wheels"
+    wheel_path = _get_path_to_built_wheel(
+        session.run(
+            "maturin",
+            "build",
+            "--no-sdist",
+            "--interpreter",
+            "python",
+            f'--cargo-extra-args="--target-dir={target_directory}"',
+            "--out",
+            wheel_directory,
+            silent=True,  # Command output is only returned when silenced=True
+        )
+    )
+    session.install(wheel_path)
+
+
 @nox.session(python="3.8")
 def lint(session: Session):
     """Lint Python code using flake8."""
@@ -28,8 +57,8 @@ def lint(session: Session):
 def mypy(session: Session) -> None:
     """Type-check using mypy."""
     args = session.posargs or ["networkg"]
-    session.install("mypy", "maturin", "-c", "requirements-dev.txt")
-    session.install(".")
+    session.install("mypy", "-c", "requirements-dev.txt")
+    install_networkg(session)
     session.run("mypy", *args)
 
 
@@ -38,7 +67,7 @@ def xdoctest(session: Session) -> None:
     """Run Python examples with xdoctest."""
     args = session.posargs or ["all"]
     session.install("xdoctest", "maturin", "-c", "requirements-dev.txt")
-    session.install(".")
+    install_networkg(session)
     session.run("xdoctest", "networkg", *args)
 
 
