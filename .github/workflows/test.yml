@@ -16,6 +16,11 @@ jobs:
           - { python-version: 3.8, os: ubuntu-latest, session: "lint" }
           - { python-version: 3.8, os: ubuntu-latest, session: "mypy" }
           - { python-version: 3.9, os: ubuntu-latest, session: "xdoctest" }
+          - { python-version: 3.7, os: ubuntu-latest, session: "test" }
+          - { python-version: 3.8, os: ubuntu-latest, session: "test" }
+          - { python-version: 3.9, os: ubuntu-latest, session: "test" }
+          - { python-version: 3.9, os: windows-latest, session: "test" }
+          - { python-version: 3.9, os: macos-latest, session: "test" }
 
     steps:
     - uses: actions/checkout@v2
