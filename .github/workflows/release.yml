@@ -18,7 +18,7 @@ jobs:
       - name: Build wheels
         run: |
           docker run --rm -v $(pwd):/io konstin2/maturin build --release -i python${{ matrix.python }}
-      
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
@@ -33,7 +33,7 @@ jobs:
       matrix:
         os: [windows-latest, macos-latest]
         python: [3.7, 3.8, 3.9]
-          
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v1
@@ -43,7 +43,7 @@ jobs:
       with:
         python-version: ${{ matrix.python }}
         architecture: x64
-    
+
     - name: Install maturin
       run: |
         pip install maturin -c requirements-dev.txt
@@ -51,7 +51,7 @@ jobs:
     - name: Build wheel
       run: |
         maturin build -i python --release
-    
+
     - name: 'Upload Artifact'
       uses: actions/upload-artifact@v2
       with:
@@ -69,14 +69,14 @@ jobs:
         with:
           name: wheels
           path: dist
-          
+
       - name: Display structure of downloaded files
         run: ls -R
         working-directory: dist
 
       - name: Set up Python
         uses: actions/setup-python@v1
-      
+
       - name: Upload to PyPi
         run: |
           pip install twine
