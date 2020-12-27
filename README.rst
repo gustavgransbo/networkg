@@ -1,8 +1,8 @@
 networkg
 ========
 
-|PyPI| |Python Version| |License|
-|Build| |Read the Docs| |Black|
+| |PyPI| |Python Version| |License|
+| |Tests| |Build| |Read the Docs| |Black|
 
 .. |PyPI| image:: https://img.shields.io/pypi/v/networkg.svg
    :target: https://pypi.org/project/networkg/
@@ -13,6 +13,9 @@ networkg
 .. |License| image:: https://img.shields.io/pypi/l/networkg
    :target: https://opensource.org/licenses/MIT
    :alt: License
+.. |Tests| image:: https://github.com/gustavgransbo/networkg/workflows/Tests/badge.svg
+   :target: https://github.com/gustavgransbo/networkg/actions?workflow=Tests
+   :alt: Tests
 .. |Build| image:: https://github.com/gustavgransbo/networkg/workflows/Build/badge.svg
    :target: https://github.com/gustavgransbo/networkg/actions?workflow=Build
    :alt: Build
