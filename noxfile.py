@@ -3,7 +3,7 @@ import nox
 from nox.sessions import Session
 
 nox.options.reuse_existing_virtualenvs = True
-nox.options.sessions = ["mypy", "lint", "xdoctest-3.8"]
+nox.options.sessions = ["mypy", "lint", "xdoctest-3.8", "test-3.8"]
 
 
 def _get_path_to_built_wheel(build_output: str) -> str:
@@ -33,6 +33,20 @@ def install_networkg(session: Session) -> None:
         )
     )
     session.install(wheel_path)
+
+
+@nox.session(python=["3.7", "3.8", "3.9"])
+def test(session: Session):
+    """Run Python test-suite."""
+    args = session.posargs or ["--import-mode=append"]
+    session.install(
+        "pytest",
+        "hypothesis",
+        "-c",
+        "requirements-dev.txt",
+    )
+    install_networkg(session)
+    session.run("pytest", *args)
 
 
 @nox.session(python="3.8")
