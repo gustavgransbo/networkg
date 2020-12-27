@@ -2,7 +2,8 @@ networkg
 ========
 
 | |PyPI| |Python Version| |License|
-| |Tests| |Build| |Read the Docs| |Black|
+| |Tests| |Build| |Read the Docs|
+| |Black| |pre-commit|
 
 .. |PyPI| image:: https://img.shields.io/pypi/v/networkg.svg
    :target: https://pypi.org/project/networkg/
@@ -25,6 +26,9 @@ networkg
 .. |Black| image:: https://img.shields.io/badge/code%20style-black-000000.svg
    :target: https://github.com/psf/black
    :alt: Black
+.. |pre-commit| image:: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white
+   :target: https://github.com/pre-commit/pre-commit
+   :alt: pre-commit
 
 
 A Python graph processing library built in Rust.
