@@ -3,7 +3,7 @@ import nox
 from nox.sessions import Session
 
 nox.options.reuse_existing_virtualenvs = True
-nox.options.sessions = ["mypy", "lint", "xdoctest-3.8", "test-3.8"]
+nox.options.sessions = ["mypy", "lint", "xdoctest-3.9", "test-3.9"]
 
 
 def _get_path_to_built_wheel(build_output: str) -> str:
@@ -49,7 +49,7 @@ def test(session: Session):
     session.run("pytest", *args)
 
 
-@nox.session(python="3.8")
+@nox.session(python="3.9")
 def lint(session: Session):
     """Lint Python code using flake8."""
     args = session.posargs or ["networkg"]
@@ -67,7 +67,7 @@ def lint(session: Session):
     session.run("flake8", *args)
 
 
-@nox.session(python="3.8")
+@nox.session(python="3.9")
 def mypy(session: Session) -> None:
     """Type-check using mypy."""
     args = session.posargs or ["networkg"]
@@ -85,7 +85,7 @@ def xdoctest(session: Session) -> None:
     session.run("xdoctest", "networkg", *args)
 
 
-@nox.session(python="3.8")
+@nox.session(python="3.9")
 def docs(session: Session) -> None:
     """Build documentation with Sphinx."""
     session.install("sphinx", "sphinx-autodoc-typehints", "-c", "requirements-dev.txt")
