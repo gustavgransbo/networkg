@@ -86,6 +86,15 @@ def xdoctest(session: Session) -> None:
 
 
 @nox.session(python="3.9")
+def typeguard(session: Session) -> None:
+    """Runtime type-check with typeguard."""
+    args = session.posargs or ["--import-mode=append"]
+    session.install("pytest", "hypothesis", "typeguard", "-c", "requirements-dev.txt")
+    install_networkg(session)
+    session.run("pytest", "--typeguard-packages=networkg", *args)
+
+
+@nox.session(python="3.9")
 def docs(session: Session) -> None:
     """Build documentation with Sphinx."""
     session.install("sphinx", "sphinx-autodoc-typehints", "-c", "requirements-dev.txt")
