@@ -1,4 +1,3 @@
-use csv;
 use std::fs::File;
 
 pub fn read_edge_list_csv(
