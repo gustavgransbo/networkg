@@ -40,7 +40,6 @@ impl Graph {
             ))
         } else {
             self.nodes[n1].push(n2);
-            //self.nodes[n2].push(n1);
             Ok(())
         }
     }
