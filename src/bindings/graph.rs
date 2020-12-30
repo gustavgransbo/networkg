@@ -55,7 +55,7 @@ impl PyGraph {
 
     #[getter]
     fn size(&self) -> PyResult<usize> {
-        Ok(self.graph.nodes.len())
+        Ok(self.graph.size())
     }
 
     #[getter]

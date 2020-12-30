@@ -1,7 +1,34 @@
 use crate::core::io::read_edge_list_csv;
 
 pub type Node = Vec<usize>;
-
+/// A directed graph.
+///
+/// A directed graph represented as an adjacency list.
+/// Nodes are densely indexed, starting at 0,
+/// meaning that a graph with N nodes will have the nodes:
+/// 0, 1, ..., N-1.
+///
+/// # Examples:
+/// Basic usage:
+/// ```
+/// # use networkg::core::graph::Graph;
+/// let mut graph = Graph::new(10);
+///
+/// assert_eq!(10, graph.size());
+/// assert!(graph.nodes[0].is_empty());
+///
+/// graph.add_edge(0, 9);
+/// assert_eq!(vec![9], graph.nodes[0]);
+/// ```
+///
+/// Read graph from csv:
+/// ```no_run
+/// # use networkg::core::graph::Graph;
+/// # fn main() -> Result<(), String> {
+/// let graph = Graph::from_csv("graph.csv", 10, b',')?;
+/// # Ok(())
+/// # }
+/// ```
 pub struct Graph {
     pub nodes: Vec<Node>,
 }
@@ -11,6 +38,10 @@ impl Graph {
         Graph {
             nodes: vec![vec![]; size],
         }
+    }
+
+    pub fn size(&self) -> usize {
+        self.nodes.len()
     }
 
     pub fn fully_connected(size: usize) -> Self {
@@ -36,7 +67,6 @@ impl Graph {
             ))
         } else {
             self.nodes[n1].push(n2);
-            //self.nodes[n2].push(n1);
             Ok(())
         }
     }

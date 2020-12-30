@@ -45,7 +45,7 @@ jobs:
     - name: Run Nox
       run: nox --session ${{ matrix.session }}-${{ matrix.python-version }}
 
-  Rust-CI:
+  Rust-Lint:
     name: "Rust: lint"
     runs-on: ubuntu-latest
     steps:
@@ -64,3 +64,20 @@ jobs:
         with:
           command: clippy
           args: --all-targets --all-features -- -D warnings
+
+  Rust-Test:
+    name: "Rust: test"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+      - uses: actions-rs/cargo@v1
+        with:
+          command: test
+          # Disable compilation of the bindings module
+          # See https://github.com/gustavgransbo/networkg/commit/041d239f4f8c5d674943a5215c0d885f73492c0e
+          args: --features "test"
