@@ -10,7 +10,7 @@ edition = "2018"
 
 [lib]
 name = "networkg"
-crate-type = ["cdylib"]
+crate-type = ["rlib", "cdylib"]
 
 [dependencies]
 csv = "1.1"
