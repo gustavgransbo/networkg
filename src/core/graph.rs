@@ -13,6 +13,10 @@ impl Graph {
         }
     }
 
+    pub fn size(&self) -> usize {
+        self.nodes.len()
+    }
+
     pub fn fully_connected(size: usize) -> Self {
         Graph {
             nodes: (0..size)
