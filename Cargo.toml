@@ -16,6 +16,9 @@ crate-type = ["rlib", "cdylib"]
 csv = "1.1"
 pyo3 = {version = "0.12.4", features = ["extension-module"]}
 
+[features]
+test = []
+
 [package.metadata.maturin]
 requires-python = ">=3.7"
 requires-dist = ["importlib_metadata==3.3.0;python_version<\"3.8\""]
