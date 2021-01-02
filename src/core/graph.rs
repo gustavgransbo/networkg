@@ -1,6 +1,10 @@
 use crate::core::io::read_edge_list_csv;
 
 pub type Node = Vec<usize>;
+
+/// A directed edge `(n1, n2)` from `n1` to `n2`.
+pub type Edge = (usize, usize);
+
 /// A directed graph.
 ///
 /// A directed graph represented as an adjacency list.
@@ -71,15 +75,12 @@ impl Graph {
         }
     }
 
-    pub fn add_edges(
-        &mut self,
-        mut edges: impl Iterator<Item = (usize, usize)>,
-    ) -> Result<(), String> {
+    pub fn add_edges(&mut self, mut edges: impl Iterator<Item = Edge>) -> Result<(), String> {
         edges.try_for_each(|(n1, n2)| self.add_edge(n1, n2))
     }
     pub fn add_falliable_edges(
         &mut self,
-        mut edges: impl Iterator<Item = Result<(usize, usize), impl std::error::Error>>,
+        mut edges: impl Iterator<Item = Result<Edge, impl std::string::ToString>>,
     ) -> Result<(), String> {
         edges.try_for_each(|x| match x {
             Ok((n1, n2)) => self.add_edge(n1, n2),
