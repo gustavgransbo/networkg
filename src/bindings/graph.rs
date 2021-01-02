@@ -1,4 +1,4 @@
-/// Python bindings for the graph module
+//! Python bindings for the graph module
 use crate::core::graph::{Graph, Node};
 
 use std::convert::TryFrom;
