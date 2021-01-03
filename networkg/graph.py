@@ -1,5 +1,5 @@
 """Graph data structure."""
-from typing import Iterable, List, Tuple
+from typing import Dict, Iterable, List, Tuple
 
 from networkg.networkg import _graph
 
@@ -92,3 +92,26 @@ class Graph:
             >>> g.add_edges([(0, 1), (0, 2), (1, 3)])
         """
         self._graph.add_edges(edges)
+
+    def single_source_shortest_path_length(self, source: int) -> Dict[int, int]:
+        """Calculates the shortest path lengths from `source` to all reachable nodes.
+
+        Args:
+            source: Node index from which to calculate shortest path lengths.
+
+        Returns:
+            A dictionary mapping each node reachable from `source` to the shortest
+            path length between them.
+
+        Examples:
+            >>> g = Graph(4)
+            >>> g.add_edges([(0, 1), (1, 2)])
+            >>> g.single_source_shortest_path_length(0) == {0: 0, 1: 1, 2: 2}
+            True
+        """
+        if source >= self._graph.size:
+            raise AttributeError(
+                f"Specified `source` ({source})"
+                f"does not exist in graph of size ({self.size})."
+            )
+        return self._graph.single_source_shortest_path_length(source)
