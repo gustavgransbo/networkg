@@ -39,7 +39,7 @@ def install_networkg(session: Session) -> None:
 
 
 @nox.session(python=["3.7", "3.8", "3.9"])
-def test(session: Session):
+def test(session: Session) -> None:
     """Run Python test-suite."""
     args = session.posargs or ["--import-mode=append"]
     session.install(
@@ -53,7 +53,7 @@ def test(session: Session):
 
 
 @nox.session(python="3.9")
-def lint(session: Session):
+def lint(session: Session) -> None:
     """Lint Python code using flake8."""
     args = session.posargs or ["networkg"]
     session.install(
