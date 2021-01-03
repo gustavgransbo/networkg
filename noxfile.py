@@ -1,4 +1,6 @@
 """Nox sessions."""
+import sys
+
 import nox
 from nox.sessions import Session
 
@@ -15,9 +17,10 @@ def _get_path_to_built_wheel(build_output: str) -> str:
 def install_networkg(session: Session) -> None:
     """Build and install networkg using maturin."""
     session.install("maturin", "-c", "requirements-dev.txt")
+
     # A custom target directory is created for each python version to circumvent
     # maturin problems related to sharing the same build area among interpreters.
-    target_directory = f"target/{session.python}".replace(".", "-")
+    target_directory = f"target/{sys.version_info.major}-{sys.version_info.minor}"
     wheel_directory = f"{target_directory}/wheels"
     wheel_path = _get_path_to_built_wheel(
         session.run(
