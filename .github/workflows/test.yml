@@ -45,39 +45,33 @@ jobs:
     - name: Run Nox
       run: nox --session ${{ matrix.session }}-${{ matrix.python-version }}
 
-  Rust-Lint:
-    name: "Rust: lint"
+  Rust-CI:
+    name: "Rust: ${{ matrix.session }}"
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        session: ["test", "lint"]
     steps:
       - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-      - run: rustup component add rustfmt clippy
-      - uses: actions-rs/cargo@v1
-        with:
-          command: fmt
-          args: --all -- --check
-      - uses: actions-rs/cargo@v1
-        with:
-          command: clippy
-          args: --all-targets --all-features -- -D warnings
 
-  Rust-Test:
-    name: "Rust: test"
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain@v1
+      - name: "Install Rust toolchain"
+        uses: actions-rs/toolchain@v1
         with:
           profile: minimal
           toolchain: stable
           override: true
-      - uses: actions-rs/cargo@v1
-        with:
-          command: test
-          # Disable compilation of the bindings module
-          # See https://github.com/gustavgransbo/networkg/commit/041d239f4f8c5d674943a5215c0d885f73492c0e
-          args: --features "test"
+
+      - name: Install rustfmt and clippy
+        if: matrix.session == 'lint'
+        run: rustup component add rustfmt clippy
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+
+      - name: Set up Nox
+        uses: excitedleigh/setup-nox@1.0.0
+        env:
+            ACTIONS_ALLOW_UNSECURE_COMMANDS: True
+
+      - name: Run Nox
+        run: nox --session rust_${{ matrix.session }}
