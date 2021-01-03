@@ -35,7 +35,7 @@ jobs:
       id: cache
       with:
         path: .nox
-        key: networkg-nox-venv-${{ matrix.os }}-${{ matrix.python-version }}-${{ matrix.session }}-${{ hashFiles('**/poetry.lock') }}
+        key: networkg-nox-venv-${{ matrix.os }}-${{ matrix.python-version }}-${{ matrix.session }}
 
     - name: Set up Nox
       uses: excitedleigh/setup-nox@1.0.0
