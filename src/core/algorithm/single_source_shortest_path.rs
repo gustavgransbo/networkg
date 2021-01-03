@@ -10,19 +10,34 @@ impl Graph {
     /// Returns a HashMap with one entry per reachable node, and it's path length.
     ///
     /// # Examples
+    /// Basic usage:
     /// ```
     /// # use networkg::core::graph::Graph;
     /// let mut graph = Graph::new(4);
     /// graph.add_edge(0, 1);
     /// graph.add_edge(1, 2);
     /// graph.add_edge(2, 3);
-    /// let shortest_paths = graph.single_source_shortest_path_length(0);
+    /// let shortest_paths = graph.single_source_shortest_path_length(0, None);
     /// assert_eq!(3, shortest_paths[&3]);
+    /// ```
+    /// With cutoff:
+    /// ```
+    /// # use networkg::core::graph::Graph;
+    /// let mut graph = Graph::new(4);
+    /// graph.add_edge(0, 1);
+    /// graph.add_edge(1, 2);
+    /// graph.add_edge(2, 3);
+    /// let shortest_paths = graph.single_source_shortest_path_length(0, Some(2));
+    /// assert!(!shortest_paths.contains_key(&3));
     /// ```
     ///
     /// # Implementation
     /// Implemented using breadth-first-search (BFS).
-    pub fn single_source_shortest_path_length(&self, source: usize) -> HashMap<usize, usize> {
+    pub fn single_source_shortest_path_length(
+        &self,
+        source: usize,
+        cutoff: Option<u32>,
+    ) -> HashMap<usize, u32> {
         let mut q = VecDeque::new();
         let mut path_lengths = HashMap::new();
         q.push_back(source);
@@ -30,6 +45,9 @@ impl Graph {
 
         while let Some(reached_node) = q.pop_front() {
             let path_length = path_lengths[&reached_node] + 1;
+            if cutoff.is_some() && cutoff.unwrap() < path_length {
+                return path_lengths;
+            }
             for reachable_node in &self.nodes[reached_node] {
                 if !path_lengths.contains_key(&reachable_node) {
                     path_lengths.insert(*reachable_node, path_length);
@@ -51,14 +69,14 @@ mod tests {
     #[test]
     fn test_distance_to_self() {
         let g = Graph::new(1);
-        let path_lengths = g.single_source_shortest_path_length(0);
-        assert_eq!(Some(&0), path_lengths.get(&0));
+        let path_lengths = g.single_source_shortest_path_length(0, None);
+        assert_eq!(0, path_lengths[&0]);
     }
 
     #[test]
     fn test_only_reaches_self_when_disconnected() {
         let g = Graph::new(10);
-        let path_lengths = g.single_source_shortest_path_length(0);
+        let path_lengths = g.single_source_shortest_path_length(0, None);
         assert!(path_lengths.contains_key(&0));
         assert_eq!(1, path_lengths.len());
     }
@@ -71,8 +89,8 @@ mod tests {
         g.add_edge(2, 3).unwrap();
         g.add_edge(0, 3).unwrap();
 
-        let path_lengths = g.single_source_shortest_path_length(0);
-        let target: HashMap<usize, usize> =
+        let path_lengths = g.single_source_shortest_path_length(0, None);
+        let target: HashMap<usize, u32> =
             HashMap::from_iter([(0, 0), (1, 1), (2, 2), (3, 1)].iter().cloned());
         assert_eq!(target, path_lengths);
     }

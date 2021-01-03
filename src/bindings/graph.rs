@@ -81,9 +81,16 @@ impl PyGraph {
         }
     }
 
-    #[text_signature = "(source)"]
-    fn single_source_shortest_path_length(&self, source: usize) -> PyResult<HashMap<usize, usize>> {
-        Ok(self.graph.single_source_shortest_path_length(source))
+    #[text_signature = "(source, cutoff)"]
+    #[args(cutoff = "None")]
+    fn single_source_shortest_path_length(
+        &self,
+        source: usize,
+        cutoff: Option<u32>,
+    ) -> PyResult<HashMap<usize, u32>> {
+        Ok(self
+            .graph
+            .single_source_shortest_path_length(source, cutoff))
     }
 }
 
