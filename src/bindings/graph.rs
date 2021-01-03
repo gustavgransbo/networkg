@@ -1,7 +1,7 @@
 //! Python bindings for the graph module
 use crate::core::graph::{Graph, Node};
 
-use std::convert::TryFrom;
+use std::{collections::HashMap, convert::TryFrom};
 
 use pyo3::exceptions::{PyAttributeError, PyValueError};
 use pyo3::prelude::*;
@@ -79,6 +79,18 @@ impl PyGraph {
             Ok(()) => Ok(()),
             Err(error) => Err(PyAttributeError::new_err(error)),
         }
+    }
+
+    #[text_signature = "(source, cutoff)"]
+    #[args(cutoff = "None")]
+    fn single_source_shortest_path_length(
+        &self,
+        source: usize,
+        cutoff: Option<u32>,
+    ) -> PyResult<HashMap<usize, u32>> {
+        Ok(self
+            .graph
+            .single_source_shortest_path_length(source, cutoff))
     }
 }
 
