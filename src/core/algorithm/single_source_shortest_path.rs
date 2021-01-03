@@ -62,7 +62,6 @@ impl Graph {
 #[cfg(test)]
 mod tests {
     use std::collections::HashMap;
-    use std::iter::FromIterator;
 
     use crate::core::graph::Graph;
 
@@ -91,7 +90,7 @@ mod tests {
 
         let path_lengths = g.single_source_shortest_path_length(0, None);
         let target: HashMap<usize, u32> =
-            HashMap::from_iter([(0, 0), (1, 1), (2, 2), (3, 1)].iter().cloned());
+            [(0, 0), (1, 1), (2, 2), (3, 1)].iter().cloned().collect();
         assert_eq!(target, path_lengths);
     }
 }
