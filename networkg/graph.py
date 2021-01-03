@@ -109,13 +109,13 @@ class Graph:
             path length between them.
 
         Examples:
-            Basic usage:
             >>> g = Graph(4)
             >>> g.add_edges([(0, 1), (1, 2)])
             >>> g.single_source_shortest_path_length(0) == {0: 0, 1: 1, 2: 2}
             True
 
-            With cutoff:
+            With cutoff
+
             >>> g = Graph(4)
             >>> g.add_edges([(0, 1), (1, 2)])
             >>> g.single_source_shortest_path_length(0, cutoff=1) == {0: 0, 1: 1}
