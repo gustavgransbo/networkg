@@ -69,7 +69,7 @@ class Graph:
             n1: A node index
             n2: A node index
 
-        Example:
+        Examples:
             >>> g = Graph(2)
             >>> g.nodes[0]
             []
@@ -87,7 +87,7 @@ class Graph:
         Args:
             edges: An iterable of node pairs
 
-        Example:
+        Examples:
             >>> g = Graph(4)
             >>> g.add_edges([(0, 1), (0, 2), (1, 3)])
         """
