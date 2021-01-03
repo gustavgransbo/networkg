@@ -102,3 +102,26 @@ def docs(session: Session) -> None:
     """Build documentation with Sphinx."""
     session.install("sphinx", "sphinx-autodoc-typehints", "-c", "requirements-dev.txt")
     session.run("sphinx-build", "docs", "docs/_build")
+
+
+@nox.session(venv_backend="none")
+def install(session: Session) -> None:
+    """Build and install networkg in the current venv."""
+    install_networkg(session)
+
+
+@nox.session(venv_backend="none")
+def rust_test(session: Session) -> None:
+    """Run Rust test-suite. Requires cargo."""
+    # --features "test" disables compilation of the bindings module
+    # See https://github.com/gustavgransbo/networkg/commit/041d239f4f8c5d674943a5215c0d885f73492c0e # noqa
+    session.run("cargo", "test", "--features", "test")
+
+
+@nox.session(venv_backend="none")
+def rust_lint(session: Session) -> None:
+    """Lint the Rust code. Requires cargo, rustfmt and clippy."""
+    session.run("cargo", "fmt", "--all", "--", "--check")
+    session.run(
+        "cargo", "clippy", "--all-targets", "--all-features", "--", "-D", "warnings"
+    )
