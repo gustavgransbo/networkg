@@ -22,10 +22,7 @@ test = []
 [package.metadata.maturin]
 requires-python = ">=3.7"
 requires-dist = ["importlib_metadata==3.3.0;python_version<\"3.8\""]
-project-url = [
-    "Repository, https://github.com/gustavgransbo/networkg/",
-    "Documentation, https://networkg.readthedocs.io/"
-]
+
 classifier = [
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Rust",
@@ -33,3 +30,7 @@ classifier = [
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9"
 ]
+
+[package.metadata.maturin.project-url]
+Repository = "https://github.com/gustavgransbo/networkg/"
+Documentation = "https://networkg.readthedocs.io/"
