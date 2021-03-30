@@ -1,6 +1,4 @@
 """Nox sessions."""
-import sys
-
 import nox
 from nox.sessions import Session
 
@@ -20,7 +18,8 @@ def install_networkg(session: Session) -> None:
 
     # A custom target directory is created for each python version to circumvent
     # maturin problems related to sharing the same build area among interpreters.
-    target_directory = f"target/{sys.version_info.major}-{sys.version_info.minor}"
+    major, minor = session.python.split(".")
+    target_directory = f"target/{major}-{minor}"
     wheel_directory = f"{target_directory}/wheels"
     wheel_path = _get_path_to_built_wheel(
         session.run(

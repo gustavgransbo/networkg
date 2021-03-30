@@ -20,7 +20,7 @@ jobs:
 
       - name: Build wheels
         run: |
-          docker run --rm -v $(pwd):/io konstin2/maturin build --release -i python${{ matrix.python }}
+          docker run --rm -v $(pwd):/io konstin2/maturin:v0.9.4 build --release -i python${{ matrix.python }}
 
 
   create_wheels_windows_mac:
