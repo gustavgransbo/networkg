@@ -1,4 +1,7 @@
 """Nox sessions."""
+import sys
+from typing import NamedTuple
+
 import nox
 from nox.sessions import Session
 
@@ -12,13 +15,26 @@ def _get_path_to_built_wheel(build_output: str) -> str:
     return build_output.strip().splitlines()[-1].split(" ")[-1]
 
 
+class _PythonVersion(NamedTuple):
+    major: int
+    minor: int
+
+
+def _determine_python_version(session: Session) -> _PythonVersion:
+    """Determine the Python version used in a Sessions."""
+    if session.python is not None:
+        major, minor = session.python.split(".")
+        return _PythonVersion(major, minor)
+    return _PythonVersion(sys.version_info.major, sys.version_info.minor)
+
+
 def install_networkg(session: Session) -> None:
     """Build and install networkg using maturin."""
     session.install("maturin", "-c", "requirements-dev.txt")
 
     # A custom target directory is created for each python version to circumvent
     # maturin problems related to sharing the same build area among interpreters.
-    major, minor = session.python.split(".")
+    major, minor = _determine_python_version(session)
     target_directory = f"target/{major}-{minor}"
     wheel_directory = f"{target_directory}/wheels"
     wheel_path = _get_path_to_built_wheel(
