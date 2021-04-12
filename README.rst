@@ -1,3 +1,4 @@
+========
 networkg
 ========
 
@@ -33,6 +34,15 @@ networkg
 
 A Python graph processing library built in Rust.
 
+This is a toy-project,
+built to learn more about how Python libraries can be backed by bindings to
+a low-level language such as Rust.
+
+I spent a lot of time setting up CI/CD for the project,
+as well as building some nice `documentation`_.
+Read more about the project in `CONTRIBUTING.rst </CONTRIBUTING.rst>`_.
+
+.. _`documentation`: https://networkg.readthedocs.io/en/latest/
 
 Installation
 ------------
